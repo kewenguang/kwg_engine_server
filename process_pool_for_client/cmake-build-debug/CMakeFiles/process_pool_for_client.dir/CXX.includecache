@@ -1,0 +1,40 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/sgengine/Documents/kwg_engine_server/process_pool_for_client/main.cpp
+sys/types.h
+-
+sys/socket.h
+-
+netinet/in.h
+-
+arpa/inet.h
+-
+assert.h
+-
+stdio.h
+-
+unistd.h
+-
+error.h
+-
+string.h
+-
+fcntl.h
+-
+stdlib.h
+-
+sys/epoll.h
+-
+signal.h
+-
+sys/wait.h
+-
+sys/stat.h
+-
+
