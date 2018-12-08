@@ -18,6 +18,7 @@
 #include <signal.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
+#include <errno.h>
 
 class process{
 public:
@@ -61,7 +62,7 @@ private:
     static processpool<T> *m_instance ;
 };
 
-template <typename T>
+template<typename T>
 processpool<T> *processpool<T>::m_instance = NULL;
 
 static int sig_pipefd[2];
@@ -103,7 +104,7 @@ static void addsig(int sig,void(handler)(int),bool restart = true){
     assert(sigaction(sig,&sa,NULL) != -1);
 }
 
-template <typename T>
+template<typename T>
 processpool<T>::processpool(int listenfd, int process_number) :m_listenfd(listenfd),m_process_number(process_number),m_idx(-1),m_stop(false){
     assert( (process_number>0)&&(process_number<=MAX_PROCESS_NUMBER));
     m_sub_process = new process[process_number];
@@ -127,7 +128,7 @@ processpool<T>::processpool(int listenfd, int process_number) :m_listenfd(listen
     }
 }
 
-template <typename T>
+template<typename T>
 void processpool<T>::setup_sig_pipe() {
     m_epollfd = epoll_create(5);
     assert(m_epollfd != -1);
@@ -144,7 +145,7 @@ void processpool<T>::setup_sig_pipe() {
     addsig(SIGPIPE,SIG_IGN);
 }
 
-template <typename T>
+template<typename T>
 void processpool<T>::run(){
     if(m_idx != -1){
         run_child();
@@ -153,7 +154,7 @@ void processpool<T>::run(){
     run_parent();
 }
 
-template <typename T>
+template<typename T>
 void processpool<T>::run_child() {
     setup_sig_pipe();
     int pipefd = m_sub_process[m_idx].m_pipefd[1];
